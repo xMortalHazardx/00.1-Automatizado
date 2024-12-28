@@ -1,26 +1,18 @@
 import time
-#import tkinter as tk
 import json
 from selenium import webdriver
-from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 #template para TKInter
 
 
-# def abrirJS():
-#     with open('/home/machine/Documents/Python/Files/credentials.json','r') as arquivo:
-#         todo = json.load(arquivo)
-#     return todo 
+def login_file():
+    with open('/home/machine/Documents/cred.json','r') as arquivo:
+        todo = json.load(arquivo)
+    return todo 
 
-#root= tk.Tk()
-#root.title("Chamado Passivo")
 
-#canvas1 = tk.Canvas(root, width=400, height=300, relief='raised')
-#canvas1.pack()
 
 
 while True:
@@ -41,11 +33,8 @@ while True:
     buton[0].send_keys("usuário")
     buton = driver.find_elements(By.ID,"Key")
     buton[0].send_keys("senha")
-
-
     buton = driver.find_elements(By.ID,"btnContinuar")
     buton[0].click()
-
     time.sleep(1)
 
     buton = driver.find_elements(By.ID,"opcaoBoxNovoChamado")

@@ -2,56 +2,54 @@ import time
 #import tkinter as tk
 import json
 from selenium import webdriver
-from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
 
-while True:
-    
-    
+
+while True:    
+    ## --- Chamador do Google Chrome
     options = webdriver.ChromeOptions()
-    #options.add_argument("--headless=new")    
-    driver = webdriver.Chrome(options=options)
-
-
-    
+    driver = webdriver.Chrome(options=options)    
     url = "https://ca.grupocarbel.com.br/SSM/Account/LogOn?opcao=logoff"
-
     driver.get(url)
     time.sleep(1)
+    ## --- Função responsavel pelo Login do usuário no C.A
+    # def login(user, senha):
+    #     element = driver.find_elements(By.ID,"UserName")
+    #     element[0].send_keys("usuário")
+    #     element = driver.find_elements(By.ID,"Key")
+    #     element[0].send_keys("senha")
+    #     time.sleep(1)
+    #     element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"btnContinuar")))
+    #     element.click()
 
-    buton = driver.find_elements(By.ID,"UserName")
-    buton[0].send_keys("usuário")
-    buton = driver.find_elements(By.ID,"Key")
-    buton[0].send_keys("Senha")
-    time.sleep(1)
-    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"btnContinuar")))
-    buton.click()    
-    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"buscaRapida")))
-    buton.send_keys(822642)
-    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@onclick='buscaRapida();']")))
-    buton.click()    
+    ## --- Função Responsável por encontrar o chamado e dar seguimento na finalização.
+    element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"buscaRapida")))
+    # --- Numero do chamado.
+    element.send_keys("Colocar o numero do chamado")
+    # --- Busca do Chamado.
+    element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@onclick='buscaRapida();']")))
+    element.click() 
 
-    buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[@id='Realizar']")))    
-    buton.click()
-
-    buton = WebDriverWait(
+    ## --- Função para fechar o chamado que foi encontrado.
+    element = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[@id='Realizar']")))    
+    element.click()
+    # --- Selecionador de opção finalizar chamado.
+    element = WebDriverWait(
     driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@name='StatusDaAtividadeDoChamadoTipoDeStatusDeAtividadeId_input' and @class='k-input']")))
-    buton.click()
-    buton.send_keys("Solucionar Chamado")
-
-    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//textarea[@name='DescricaoStatusDaAtividade']")))
-    buton.send_keys("""Boa tarde Alexandro!
+    element.click()
+    element.send_keys("Solucionar Chamado")
+    # --- No campo de descrição e finalização do chamado adiciona as informações que foram feitas.
+    element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//textarea[@name='DescricaoStatusDaAtividade']")))
+    element.send_keys(""" Saudações !
                     Realizado varias tentativas de contato sem sucesso, caso seja necessário tratativa de falha em acessar o site do Dealer, gentileza
                     abrir um novo chamado com um numero de contato válido e disponibilidade para traatativa.""")
-    buton = WebDriverWait(
+    element = WebDriverWait(
         driver,10).until(EC.presence_of_element_located((By.XPATH,"//span[@id='Salvar' and @data-i18n='Salvar' and @comando='Salvar' and text()='Salvar']")))
-    buton.click()                                       
-    time.sleep(100)
+    element.click()             
+    
     
     break
