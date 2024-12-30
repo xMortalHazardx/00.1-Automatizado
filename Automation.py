@@ -1,17 +1,10 @@
 import time
+#import tkinter as tk
 import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-#template para TKInter
-
-
-def login_file():
-    with open('/home/machine/Documents/cred.json','r') as arquivo:
-        todo = json.load(arquivo)
-    return todo 
-
 
 
 
@@ -30,34 +23,33 @@ while True:
     time.sleep(1)
 
     buton = driver.find_elements(By.ID,"UserName")
-    buton[0].send_keys("usuário")
+    buton[0].send_keys("cesar.emc")
     buton = driver.find_elements(By.ID,"Key")
-    buton[0].send_keys("senha")
-    buton = driver.find_elements(By.ID,"btnContinuar")
-    buton[0].click()
+    buton[0].send_keys("!Grupo@2001")
     time.sleep(1)
+    
+    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"btnContinuar")))
+    buton.click()    
+    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"buscaRapida")))
+    buton.send_keys(822642)
+    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@onclick='buscaRapida();']")))
+    buton.click()    
 
-    buton = driver.find_elements(By.ID,"opcaoBoxNovoChamado")
-    buton[0].click()
+    buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[@id='Realizar']")))    
+    buton.click()
 
-    buton = driver.find_elements(By.ID,"abrirSelecaoSolicitante")
-    buton[0].click()
-
-    wait = WebDriverWait(driver, 5)
-    icon = wait.until(EC.element_to_be_clickable((By.XPATH, "//th[@data-field='Login']//span[@class='k-icon k-filter']")))
-    # Clica no ícone
-    icon.click()
-    time.sleep(5)
-
-    buton = driver.find_element(By.XPATH, "/html/body/div[10]/form/div[1]/input")
-    buton.send_keys("leoncio.faria")
-    time.sleep(5)
-
-    buton = driver.find_element(By.XPATH, "//button[@class='k-button k-primary']").click()
-
-    icon = driver.find_element(By.XPATH, "//td//span[@class='k-icon k-i-tick']/parent::a")    
-    icon.click()
-    time.sleep(10)
-    driver.quit()
+    buton = WebDriverWait(
+    driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@name='StatusDaAtividadeDoChamadoTipoDeStatusDeAtividadeId_input' and @class='k-input']")))
+    buton.click()
+    buton.send_keys("Solucionar Chamado")
+    # --- Finalização d chamado, já na tela de solucionar
+    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//textarea[@name='DescricaoStatusDaAtividade']")))
+    buton.send_keys("""Boa tarde Alexandro!
+                    Realizado varias tentativas de contato sem sucesso, caso seja necessário tratativa de falha em acessar o site do Dealer, gentileza
+                    abrir um novo chamado com um numero de contato válido e disponibilidade para traatativa.""")
+    buton = WebDriverWait(
+        driver,10).until(EC.presence_of_element_located((By.XPATH,"//span[@id='Salvar' and @data-i18n='Salvar' and @comando='Salvar' and text()='Salvar']")))
+    buton.click()                                       
+    time.sleep(100)
     
     break
