@@ -104,7 +104,7 @@ class ChamadoPassivo:
         
         icon = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
             (By.XPATH, "//textarea[@class='k-textbox' and @id= 'Motivo']")))
-        icon.send_keys("Teste de abertura de chamado passivo")
+        icon.send_keys("")
         time.sleep(5)      
         pass 
     
