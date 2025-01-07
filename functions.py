@@ -1,5 +1,4 @@
 import time
-#import tkinter as tk
 import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -9,23 +8,14 @@ from selenium.webdriver.support import expected_conditions as EC
 options = webdriver.ChromeOptions()
 driver = webdriver.Chrome(options=options)
 
-#options.add_argument("--headless=new")  
-
-#template para TKInter
 
 
-# def abrirJS():
-#     with open('/home/machine/Documents/Python/Files/credentials.json','r') as arquivo:
-#         todo = json.load(arquivo)
-#     return todo 
 
-#root= tk.Tk()
-#root.title("Chamado Passivo")
+def abrirJS():
+    with open('/home/machine/Documents/Automatizado/00.1-Automatizado/chamado.json','r') as arquivo:
+        todo = json.load(arquivo)
+    return todo 
 
-#canvas1 = tk.Canvas(root, width=400, height=300, relief='raised')
-#canvas1.pack()
-
-#Possivel Logica com o While para realizar a abertura dos chamados de acordo com o index.
 
 
 
