@@ -25,7 +25,7 @@ while True:
     buton = driver.find_elements(By.ID,"UserName")
     buton[0].send_keys("cesar.emc")
     buton = driver.find_elements(By.ID,"Key")
-    buton[0].send_keys("!Grupo@2004")
+    buton[0].send_keys("123456")
     time.sleep(1)
     
     buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"btnContinuar")))
