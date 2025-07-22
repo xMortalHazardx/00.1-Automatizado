@@ -51,6 +51,10 @@ while True:
     buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//button [@type='submit']")))
     buton.click()
 
+
+    buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[contains(@class, 'k-icon') and contains(@class, 'k-i-tick')]")))    
+    buton.click()
+
     
     time.sleep(100)    
 
