@@ -25,31 +25,48 @@ while True:
     buton = driver.find_elements(By.ID,"UserName")
     buton[0].send_keys("cesar.emc")
     buton = driver.find_elements(By.ID,"Key")
-    buton[0].send_keys("zzzzzzzzzzzz")
+    buton[0].send_keys("!Grupo@2004")
     time.sleep(1)
     
     buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"btnContinuar")))
     buton.click()    
-    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"buscaRapida")))
-    buton.send_keys(822642)
-    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@onclick='buscaRapida();']")))
+    # buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"buscaRapida")))
+    # buton.send_keys(822642)
+    # buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@onclick='buscaRapida();']")))
+    # buton.click()
+
+    buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID,"opcaoBoxNovoChamado")))    
+    buton.click() 
+
+    buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID,"abrirSelecaoSolicitante")))    
     buton.click()    
 
-    buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[@id='Realizar']")))    
+    buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//a[@class='k-link' and normalize-space(text())='Login']/preceding-sibling::a[@class='k-grid-filter']")))    
     buton.click()
 
-    buton = WebDriverWait(
-    driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@name='StatusDaAtividadeDoChamadoTipoDeStatusDeAtividadeId_input' and @class='k-input']")))
+    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@data-bind='value:filters[0].value']")))
     buton.click()
-    buton.send_keys("Solucionar Chamado")
-    # --- Finalização d chamado, já na tela de solucionar
-    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//textarea[@name='DescricaoStatusDaAtividade']")))
-    buton.send_keys("""Boa tarde Alexandro!
-                    Realizado varias tentativas de contato sem sucesso, caso seja necessário tratativa de falha em acessar o site do Dealer, gentileza
-                    abrir um novo chamado com um numero de contato válido e disponibilidade para traatativa.""")
-    buton = WebDriverWait(
-        driver,10).until(EC.presence_of_element_located((By.XPATH,"//span[@id='Salvar' and @data-i18n='Salvar' and @comando='Salvar' and text()='Salvar']")))
-    buton.click()                                       
-    time.sleep(100)
+    buton.send_keys("cesar.emc")
+    
+    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//button [@type='submit']")))
+    buton.click()
+
+    
+    time.sleep(100)    
+
+    # buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[@id='Realizar']")))    
+    # buton.click()
+
+    # buton = WebDriverWait(
+    # driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@name='StatusDaAtividadeDoChamadoTipoDeStatusDeAtividadeId_input' and @class='k-input']")))
+    # buton.click()
+    # buton.send_keys("Solucionar Chamado")
+    # # --- Finalização d chamado, já na tela de solucionar
+    # buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//textarea[@name='DescricaoStatusDaAtividade']")))
+    # buton.send_keys("""""")
+    # buton = WebDriverWait(
+    #     driver,10).until(EC.presence_of_element_located((By.XPATH,"//span[@id='Salvar' and @data-i18n='Salvar' and @comando='Salvar' and text()='Salvar']")))
+    # buton.click()                                       
+    # time.sleep(100)
     
     break

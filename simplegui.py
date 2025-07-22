@@ -16,8 +16,7 @@ index_chamado = [
             [sg.Text("Digite o usuário: ")],     
             [sg.InputText(tooltip="Digite o usuário...", key='user', size=[42,10])],
             [sg.Multiline(key='caixa de texto', size=[40,10])],
-            [sg.Button("Enviar"), sg.Button("Editar", tooltip="Editar usuário."),
-             sg.Button("Apagar",tooltip="Apagar usuário."), sg.Button("Sair")]  
+            [sg.Button("Enviar", key="Enviar", tooltip="Envia o chamado"),sg.Button("Sair", key="Sair", tooltip="Sair do programa")]  
 ]      
 index_login = [
             [sg.Text("Digite o usuário: ")],     
@@ -42,10 +41,15 @@ while True:
 
     #   Processa os eventos da janela
     match event:
+        #---------------------------------------------------------
         case "Add":
             if values['user'] == "" or values['pass'] == "":
-                sg.popup_error("usuário já cadastrado")
+                sg.popup_error("Usuário ou senha não podem ser vazios.")
                 continue
+                # Tenho que criar uma verificação para não adicionar o usuário 
+            # elif values['user'] == "" and values['pass'] == "":
+            #     sg.popup_error("Usuário admin não pode ser adicionado.")
+            #     continue
             else:
                 novo_usuario = {
                     "user": values['user'],
@@ -56,32 +60,38 @@ while True:
                 
                 sg.popup("Usuário adicionado com sucesso!")
                 tela_login.close()
-                break
-            usuarios = guardar_user()
-            novo = values['user'] + "\n"
-            usuarios.append(novo)
-            guardar_user(usuarios)
-            window['users'].update(usuarios) 
-            
-#         #---------------------------------------------------------
-#         case "Editar":
-#             usuario_editar = values['users'][0]
-#             novo_usuario = values['user'] + "\n"
-            
-#             usuarios = ler_texto()            
-#             index = usuarios.index(usuario_editar)
-#             usuarios[index] = novo_usuario  # Atualiza o nome do usuário.
-#             add_texto(usuarios)
+            continue
+    event, values = tela_chamado.read()
 
-#             window['users'].update(usuarios) # Atualiza o Listbox com a lista editada.
-#         #---------------------------------------------------------
-#         #case "Apagar":
+        #---------------------------------------------------------
+        # case "Editar":
+        #     usuario_editar = values['users'][0]
+        #     novo_usuario = values['user'] + "\n"
+            
+        #     usuarios = ler_texto()            
+        #     index = usuarios.index(usuario_editar)
+        #     usuarios[index] = novo_usuario  # Atualiza o nome do usuário.
+        #     add_texto(usuarios)
 
-                     
+        #     window['users'].update(usuarios) # Atualiza o Listbox com a lista editada.
+        #---------------------------------------------------------
+    match event:
+
+        case "Enviar":
+            import Automation as automacao
+            automacao.main()  # Chama a função principal do script Automation.py
+            continue
+
+        case "Sair":
+            tela_chamado.close()
+            tela_login.close()
+            break
+
+                    
             
 
-#         case sg.WIN_CLOSED:
-#             break        
+        case sg.WIN_CLOSED:
+            break        
                 
             
 #         case "Sair":
@@ -89,9 +99,5 @@ while True:
 #             window.close()
 #             break
 
-# arlindo = ler_texto(filepath=FILEUSERS)   
 
-# for item in arlindo:
-#      item.strip()
-#      print(item)
 
