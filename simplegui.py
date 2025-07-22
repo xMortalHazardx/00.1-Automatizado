@@ -1,16 +1,11 @@
 import FreeSimpleGUI as sg
 import json
+from functions import abrirJS, guardar_user
 
 sg.theme('DarkGrey12')
 FILEUSERS = '/home/machine/Documents/00.1-Automatizado/usuários.txt'
 FILECHAMADO = '/home/machine/Documents/00.1-Automatizado/chamado.json'
 
-# with open('/home/machine/Documents/00.1-Automatizado/chamado.json','r') as arquivo:
-#             chamado = json.load(arquivo)
-# def ler_texto(filepath=FILECHAMADO):
-#     with open(filepath, 'r') as arquivo:
-#         usuario = arquivo.readlines()
-#         return usuario
 
 
 def add_texto(user, filepath=FILEUSERS):       
@@ -26,8 +21,8 @@ index_chamado = [
 ]      
 index_login = [
             [sg.Text("Digite o usuário: ")],     
-            [sg.InputText(tooltip="Digite o usuário...", key='user', size=[42,10])],
-            [sg.InputText(tooltip="Digite o usuário...", key='user', size=[42,10])],
+            [sg.Input(tooltip="Digite o usuário...", key='user', size=[42,10])],
+            [sg.Input(tooltip="Digite sua senha...",password_char='xxxxxxxxxxx', key='pass', size=[42,10])],
             [sg.Button("Add", tooltip="Adicionar Credenciais.")]
             
             
@@ -41,48 +36,62 @@ while True:
     event, values = tela_login.read()
 
     print(1,event)
+    print(2,values)
     
-    
+    usuarios = []
 
-    # Processa os eventos da janela
+    #   Processa os eventos da janela
     match event:
-
         case "Add":
-            usuarios = ler_texto()
+            if values['user'] == "" or values['pass'] == "":
+                sg.popup_error("usuário já cadastrado")
+                continue
+            else:
+                novo_usuario = {
+                    "user": values['user'],
+                    "pass": values['pass']
+                }
+                # Lê o arquivo JSON e adiciona o novo usuário
+                guardar_user(novo_usuario)               
+                
+                sg.popup("Usuário adicionado com sucesso!")
+                tela_login.close()
+                break
+            usuarios = guardar_user()
             novo = values['user'] + "\n"
             usuarios.append(novo)
-            add_texto(usuarios)
+            guardar_user(usuarios)
             window['users'].update(usuarios) 
             
-        #---------------------------------------------------------
-        case "Editar":
-            usuario_editar = values['users'][0]
-            novo_usuario = values['user'] + "\n"
+#         #---------------------------------------------------------
+#         case "Editar":
+#             usuario_editar = values['users'][0]
+#             novo_usuario = values['user'] + "\n"
             
-            usuarios = ler_texto()            
-            index = usuarios.index(usuario_editar)
-            usuarios[index] = novo_usuario  # Atualiza o nome do usuário.
-            add_texto(usuarios)
+#             usuarios = ler_texto()            
+#             index = usuarios.index(usuario_editar)
+#             usuarios[index] = novo_usuario  # Atualiza o nome do usuário.
+#             add_texto(usuarios)
 
-            window['users'].update(usuarios) # Atualiza o Listbox com a lista editada.
-        #---------------------------------------------------------
-        #case "Apagar":
+#             window['users'].update(usuarios) # Atualiza o Listbox com a lista editada.
+#         #---------------------------------------------------------
+#         #case "Apagar":
 
                      
             
 
-        case sg.WIN_CLOSED:
-            break        
+#         case sg.WIN_CLOSED:
+#             break        
                 
             
-        case "Sair":
+#         case "Sair":
             
-            window.close()
-            break
+#             window.close()
+#             break
 
-arlindo = ler_texto(filepath=FILEUSERS)   
+# arlindo = ler_texto(filepath=FILEUSERS)   
 
-for item in arlindo:
-     item.strip()
-     print(item)
+# for item in arlindo:
+#      item.strip()
+#      print(item)
 
