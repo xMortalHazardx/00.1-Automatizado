@@ -17,7 +17,7 @@ def chamado_final1(finalizar, filepath='/home/machine/Documents/finalizar_chamad
         json.dump(finalizar, arquivo, indent=4)
         return finalizar
 
-def chamado_final2(finalizar, filepath='/home/machine/Documents/finalizar_chamado.json'):
+def chamado_final2(filepath='/home/machine/Documents/finalizar_chamado.json'):
     with open(filepath, 'r') as arquivo:
-        json.load(finalizar, arquivo, indent=4)
-        return finalizar
+        todo = json.load(arquivo)
+        return todo
