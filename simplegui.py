@@ -3,14 +3,7 @@ import json
 from functions import abrirJS, guardar_user
 
 sg.theme('DarkGrey12')
-FILEUSERS = '/home/machine/Documents/00.1-Automatizado/usuários.txt'
-FILECHAMADO = '/home/machine/Documents/00.1-Automatizado/chamado.json'
-
-
-
-def add_texto(user, filepath=FILEUSERS):       
-        with open(filepath, 'w') as arquivo:
-            arquivo.writelines(user)      
+   
 
 index_chamado = [
             [sg.Text("Digite o usuário: ")],     
@@ -22,9 +15,7 @@ index_login = [
             [sg.Text("Digite o usuário: ")],     
             [sg.Input(tooltip="Digite o usuário...", key='user', size=[42,10])],
             [sg.Input(tooltip="Digite sua senha...",password_char='xxxxxxxxxxx', key='pass', size=[42,10])],
-            [sg.Button("Add", tooltip="Adicionar Credenciais.")]
-            
-            
+            [sg.Button("Add", tooltip="Adicionar Credenciais.")]            
 ]
 
 tela_chamado = sg.Window('Chamado Passivo', index_chamado)
@@ -33,18 +24,15 @@ tela_login = sg.Window('Login', index_login)
 while True:
 
     event, values = tela_login.read()
-
-    print(1,event)
-    print(2,values)
-    
-    usuarios = []
+    usuario = abrirJS()   
 
     #   Processa os eventos da janela
     match event:
-        #---------------------------------------------------------
+        
         case "Add":
-            if values['user'] == "" or values['pass'] == "":
-                sg.popup_error("Usuário ou senha não podem ser vazios.")
+            if values['user'] == usuario['user'] or usuario['pass'] == values['pass']:
+                sg.popup("Login Realizado com Sucesso!.")
+                tela_login.close()                               
                 continue
                 # Tenho que criar uma verificação para não adicionar o usuário 
             # elif values['user'] == "" and values['pass'] == "":
@@ -59,22 +47,11 @@ while True:
                 guardar_user(novo_usuario)               
                 
                 sg.popup("Usuário adicionado com sucesso!")
-                tela_login.close()
+                tela_login.close()                
             continue
+
     event, values = tela_chamado.read()
 
-        #---------------------------------------------------------
-        # case "Editar":
-        #     usuario_editar = values['users'][0]
-        #     novo_usuario = values['user'] + "\n"
-            
-        #     usuarios = ler_texto()            
-        #     index = usuarios.index(usuario_editar)
-        #     usuarios[index] = novo_usuario  # Atualiza o nome do usuário.
-        #     add_texto(usuarios)
-
-        #     window['users'].update(usuarios) # Atualiza o Listbox com a lista editada.
-        #---------------------------------------------------------
     match event:
 
         case "Enviar":
@@ -85,19 +62,11 @@ while True:
         case "Sair":
             tela_chamado.close()
             tela_login.close()
-            break
-
-                    
-            
+            break          
 
         case sg.WIN_CLOSED:
             break        
-                
-            
-#         case "Sair":
-            
-#             window.close()
-#             break
+
 
 
 

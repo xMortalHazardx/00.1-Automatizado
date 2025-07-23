@@ -1,12 +1,11 @@
 import time
-#import tkinter as tk
-import json
+import functions as f
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
+credenciais = f.abrirJS()
 
 while True:
     
@@ -23,9 +22,9 @@ while True:
     time.sleep(1)
 
     buton = driver.find_elements(By.ID,"UserName")
-    buton[0].send_keys("cesar.emc")
+    buton[0].send_keys(credenciais['user'])
     buton = driver.find_elements(By.ID,"Key")
-    buton[0].send_keys("123456")
+    buton[0].send_keys(credenciais['pass'])
     time.sleep(1)
     
     buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID,"btnContinuar")))
