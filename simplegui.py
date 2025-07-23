@@ -1,15 +1,18 @@
 import FreeSimpleGUI as sg
 import json
-from functions import abrirJS, guardar_user
+import functions as f
 
 sg.theme('DarkGrey12')
    
 
+
 index_chamado = [
-            [sg.Text("Digite o usuário: ")],     
-            [sg.InputText(tooltip="Digite o usuário...", key='user', size=[42,10])],
-            [sg.Multiline(key='caixa de texto', size=[40,10])],
-            [sg.Button("Enviar", key="Enviar", tooltip="Envia o chamado"),sg.Button("Sair", key="Sair", tooltip="Sair do programa")]  
+            [sg.Text("Digite o usuário: ")],
+            [sg.Input(tooltip="Digite o usuário...", key='user', size=[42,10], justification='right')],
+            [sg.Text("Descrição do chamado: "),sg.Text("Finalizar chamado: ")],
+            [sg.Multiline(key='descricao_chamado', size=[40,10], justification='left'),             
+             sg.Multiline(key='finalizacao_chamado', size=[40,10], justification='right')],
+            [sg.Button("Enviar", key="Enviar", tooltip="Envia o chamado com finalização"),sg.Button("Sair", key="Sair", tooltip="Sair do programa")]  
 ]      
 index_login = [
             [sg.Text("Digite o usuário: ")],     
@@ -18,13 +21,14 @@ index_login = [
             [sg.Button("Add", tooltip="Adicionar Credenciais.")]            
 ]
 
-tela_chamado = sg.Window('Chamado Passivo', index_chamado)
-tela_login = sg.Window('Login', index_login)
+tela_chamado = sg.Window('Chamado Passivo', index_chamado, auto_size_buttons=True, element_justification='center')
+tela_login = sg.Window('Login', index_login, element_justification='center')
 
 while True:
 
     event, values = tela_login.read()
-    usuario = abrirJS()   
+    usuario = f.abrirJS()
+    
 
     #   Processa os eventos da janela
     match event:
@@ -44,7 +48,7 @@ while True:
                     "pass": values['pass']
                 }
                 # Lê o arquivo JSON e adiciona o novo usuário
-                guardar_user(novo_usuario)               
+                f.guardar_user(novo_usuario)               
                 
                 sg.popup("Usuário adicionado com sucesso!")
                 tela_login.close()                
@@ -55,6 +59,13 @@ while True:
     match event:
 
         case "Enviar":
+            texto = {
+                "usuario": values['user'],
+                "descricao": values['descricao_chamado'],
+                "finalizar": values['finalizacao_chamado']}
+            
+            f.chamado_final1(texto)
+            
             import Automation as automacao
             automacao.main()  # Chama a função principal do script Automation.py
             continue

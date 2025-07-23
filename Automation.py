@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 credenciais = f.abrirJS()
+chamado = f.chamado_final2()
 
 while True:
     
@@ -49,7 +50,7 @@ while True:
     buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
         (By.XPATH,"//input[@data-bind='value:filters[0].value']")))
     buton.click()
-    buton.send_keys("cesar.emc") 
+    buton.send_keys(chamado['usuario']) 
 
     time.sleep(5)   
     
@@ -75,31 +76,30 @@ while True:
     buton.click()
 
     buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//textarea[@id='Motivo']")))
-    buton.send_keys("""TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE""")
+    buton.send_keys(chamado['descricao'])
 
     buton = WebDriverWait(driver, 15).until(EC.element_to_be_clickable((
     By.XPATH, "//span[contains(@id, 'Salvar') and contains(normalize-space(.), 'Salvar')]")))
-    buton.click()
-
-    
+    buton.click()  
        
 
-    
-    time.sleep(100)    
+    buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[@id='Realizar']")))    
+    buton.click()
 
-    # buton = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, "//span[@id='Realizar']")))    
-    # buton.click()
+    buton = WebDriverWait(
+    driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@name='StatusDaAtividadeDoChamadoTipoDeStatusDeAtividadeId_input' and @class='k-input']")))
+    buton.click()
+    buton.send_keys("Solucionar Chamado")
 
-    # buton = WebDriverWait(
-    # driver, 10).until(EC.presence_of_element_located((By.XPATH,"//input[@name='StatusDaAtividadeDoChamadoTipoDeStatusDeAtividadeId_input' and @class='k-input']")))
-    # buton.click()
-    # buton.send_keys("Solucionar Chamado")
-    # # --- Finalização d chamado, já na tela de solucionar
-    # buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,"//textarea[@name='DescricaoStatusDaAtividade']")))
-    # buton.send_keys("""""")
-    # buton = WebDriverWait(
-    #     driver,10).until(EC.presence_of_element_located((By.XPATH,"//span[@id='Salvar' and @data-i18n='Salvar' and @comando='Salvar' and text()='Salvar']")))
-    # buton.click()                                       
-    # time.sleep(100)
+    # --- Finalização d chamado, já na tela de solucionar
+    buton = WebDriverWait(driver, 10).until(EC.presence_of_element_located((
+    By.XPATH,"//textarea[@name='DescricaoStatusDaAtividade']")))
+    buton.send_keys(chamado['finalizar'])
+
+    buton = WebDriverWait(driver,10).until(EC.presence_of_element_located((
+    By.XPATH,"//span[@id='Salvar' and @data-i18n='Salvar' and @comando='Salvar' and text()='Salvar']")))
+    buton.click()
+
+    time.sleep(5)
     
     break
